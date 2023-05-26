@@ -49,7 +49,7 @@ if (isset($_POST['supprimertweet'])) {
         <li><a href="#">o</a></li>
         <li><a href="#">o</a></li>
         <li><a href="#">o</a></li>
-        <li><a href="profil.html" class="onglet">profil</a></li>
+        <li><a href="profil.php" class="onglet">profil</a></li>
       </ul>
     </nav>
     <div class="cache" id="menuburger">
@@ -64,8 +64,8 @@ if (isset($_POST['supprimertweet'])) {
         <li><button id="animebtn" class="animebtn" data-tag="anime" > ANIME </button></li>
         <li><button id="animebtn1" class="animebtn" data-tag="manga" > MANGAS </button></li>
         <li><button id="animebtn2" class="animebtn" data-tag="webtoon" > WEBTOONS </button></li>
-        <li><button id="animebtn3" class="animebtn"  > RESET </button></li>
       </ul>
+      <li><button id="animebtn3" class="animebtn"  > RESET </button></li>
     <h2 class="tendances"> Tendances du moment : </h2>
     <i id="modalflottant" class="fa-solid fa-pen-nib fa-fade" onclick="ouvretoi()"></i>
       <div id="modal" class="modal">
@@ -135,6 +135,8 @@ if (isset($_POST['supprimertweet'])) {
               <?php echo $msg['description']; ?><br>
             </p>
           </div>
+          <?php if($msg['image'] != NULL ){  ?>
+          <img src="<?php echo $msg['image']; ?>" class="card-img-bottom" alt="imagedelapersonnequiupload"> <?php } ?>
           <div class="containerpseudophoto">
             <button class="btn"><i class="coeur fa-solid fa-heart" ></i></button>
             <p class="nombredelikes"> 0 </p>
@@ -211,7 +213,6 @@ if (isset($_POST['supprimertweet'])) {
         </form>
       </div>
     </div> <?php } ?>
-
   </main>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

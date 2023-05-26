@@ -17,3 +17,14 @@
   .conseillez {
     color: orange;
   }
+  .container img {
+    width: 10%;
+  }
+  .bordure {
+    margin-top: 3%;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    margin-left: 35%;
+  }

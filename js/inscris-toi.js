@@ -45,14 +45,14 @@ desboutons.forEach(element => { element.addEventListener('click', () => {
         else{
             post.style.display = "none";
         }
+        reset.addEventListener('click', () => {
+          post.style.display = "block";
+        });
     })
 })
     
 });
 
-reset.addEventListener('click', () => {
-  post.style.display = "block";
-});
 
 function like() {
   var element = document.getElementById("coeur2");

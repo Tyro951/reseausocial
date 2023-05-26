@@ -3,6 +3,7 @@ const non = document.querySelector(".supprime-toi-pas");
 const jeteferme = document.querySelector(".jeteferme");
 const supprimer = document.querySelector("jetesupprime");
 const trash = document.querySelectorAll(".poubelle");
+const modalpublier = document.getElementById("modal");
 
 trash.forEach(element => {
   const supprimer = element.parentElement.nextElementSibling;
@@ -44,3 +45,20 @@ window.addEventListener('beforeunload', function(event) {
   localStorage.setItem('tags', choixtags.value);
 });
 
+function ouvretoi(){
+  modalpublier.style.display = "block";
+  console.log("coucou");
+};
+
+document.querySelector(".close").addEventListener("click", function() {
+  modalpublier.style.display = "none";
+});
+document.getElementById("annuler").addEventListener("click", function() {
+  modalpublier.style.display = "none";
+});
+
+window.addEventListener("click", function(event) {
+  if (event.target === modalpublier) {
+    modalpublier.style.display = "none";
+  }
+});

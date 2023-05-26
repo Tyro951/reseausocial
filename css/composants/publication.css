@@ -1,0 +1,100 @@
+.publish {
+    margin-left: 32%;
+  }
+
+  .publish img {
+    width: 10%;
+  }
+  .parametres {
+    margin-top: 2%;
+    margin-left: 90%;
+    width: 2%;
+  }
+  .seconnecter {
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 15%;
+    margin-left: 45%;
+  }
+
+  .nonconnecte {
+    font-style: normal;
+    color: orange;
+    font-size: 120%;
+    margin-left: 4%;
+  }
+  .modal{
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 64%;
+    overflow: auto;
+    border-radius: 2%;
+    background-color: red;
+  }
+  .profilconnexion{
+    text-align: center;
+    color: red;
+  }
+  .jetesupprime {
+    display: none;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    margin-left: 20%;
+    margin-top: 15%;
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    overflow: hidden;
+    background-color: orange;
+    opacity: 80%;
+  }
+
+  .supprime-toi-bien {
+    border-radius: 25%;
+    background-color: rgb(19, 116, 219);
+    color: white;
+    margin-left: 10%;
+    padding: 2%;
+  }
+
+  .supprime-toi-pas {
+    border-radius: 25%;
+    background-color: rgb(19, 116, 219);
+    color: white;
+    margin-left: 10%;
+    padding: 2%;
+  }
+
+  .supprime-toi-bien:hover {
+    box-shadow: 5px 5px 10px 10px;
+    transition: all 1s ease;
+  }
+
+  .supprime-toi-pas:hover {
+    box-shadow: 5px 5px 10px 10px;
+    transition: all 1s ease;
+  }
+
+  .jeteferme {
+    font-size: x-large;
+    color: grey;
+    font-weight: bold;
+    position: relative;
+    cursor: pointer;
+    margin-left: 3%;
+    margin-top: 2%;
+  }
+
+  .jeteferme:hover {
+    color: white;
+  }
+  .orange img{
+    width: 20%;
+  }
+  .orange{
+    text-align: center;
+  }

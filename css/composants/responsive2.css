@@ -1,0 +1,17 @@
+@media (max-width: 952px) and (min-width: 350px) {
+    #commenter2 {
+      margin-left: 50%;
+    }
+
+    #partager2 {
+      margin-left: 50%;
+    }
+
+    #commenter {
+      margin-left: 50%;
+    }
+
+    #partager {
+      margin-left: 50%;
+    }
+  }
