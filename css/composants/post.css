@@ -20,41 +20,41 @@
     width: 20%;
   }
 
-  #coeur {
+  .coeur {
     margin-left: 0%;
     margin-top: 2%;
     margin-right: 1%;
   }
 
-  #coeur:hover {
+  .coeur:hover {
     color: red;
     transition: all 1s ease;
     transform: scale(1.5);
   }
 
-  #commenter {
+  .commenter {
     margin-left: 120%;
     margin-top: 10%;
   }
 
-  #commenter:hover {
+  .commenter:hover {
     color: rgb(24, 24, 239);
     transition: all 1s ease;
     transform: scale(1.5);
   }
 
-  #partager {
+  .partager {
     margin-left: 135%;
     margin-top: 10%;
   }
 
-  #partager:hover {
+  .partager:hover {
     color: rgb(11, 194, 11);
     transition: all 1s ease;
     transform: scale(1.5);
   }
 
-  #coeur2 {
+  .coeur2 {
     margin-left: 0%;
     margin-top: 100%;
     margin-right: 1%;
@@ -65,29 +65,29 @@
     transition: all 1s ease;
   }
 
-  #coeur2:hover {
+  .coeur2:hover {
     color: red;
     transition: all 1s ease;
     transform: scale(1.5);
   }
 
-  #commenter2 {
+  .commenter2 {
     margin-left: 120%;
     margin-top: 10%;
   }
 
-  #commenter2:hover {
+  .commenter2:hover {
     color: rgb(24, 24, 239);
     transition: all 1s ease;
     transform: scale(1.5);
   }
 
-  #partager2 {
+  .partager2 {
     margin-left: 135%;
     margin-top: 10%;
   }
 
-  #partager2:hover {
+  .partager2:hover {
     color: rgb(11, 194, 11);
     transition: all 1s ease;
     transform: scale(1.5);
@@ -110,10 +110,10 @@
     padding: 1%;
   }
 
-  #nombredelikes {
+  .nombredelikes {
     margin-top: 8%;
   }
 
-  #nombredelikes2 {
+  .nombredelikes2 {
     margin-top: 8%;
   }

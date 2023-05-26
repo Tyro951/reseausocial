@@ -17,30 +17,31 @@ if(isset($_POST["submit"])){
 
     if(move_uploaded_file($_FILES["image"]["tmp_name"], $cheminFichierCible)){
 
-      $requete = $bdd->prepare("SELECT image FROM tweets WHERE id_tweets = ?");
-      $requete->execute(array($nomFichier));
-      $URLImage = $repertoireCible . $nomFichier ;
-        
-          }
-        }
-      }
-    
+            if(isset($_POST['description']) and !empty($_POST['description'])) {
+              $description = htmlentities($_POST['description']);
+              $tags = htmlentities($_POST['tags']); 
+                $insertmsg = $bdd->prepare("INSERT INTO tweets(description, tag, image, userid) VALUES(?, ?, ?, ?)");
+                $insertmsg->execute(array($description, $tags, $cheminFichierCible, $data["id_utilisateurs"]));
+            }
+    }
+  }
   if(isset($_POST['description']) and !empty($_POST['description'])) {
     $description = htmlentities($_POST['description']);
-    $tags = htmlentities($_POST['tags']); 
-
-    $insertmsg = $bdd->prepare("INSERT INTO tweets(description, tag, image, userid) VALUES(?, ?, ?, ?)");
-    $insertmsg->execute(array($description, $tags, $URLImage, $data["id_utilisateurs"]));
-
+    $tags = htmlentities($_POST['tags']);
+    if(!$nomFichier){
+      $insertmsg = $bdd->prepare("INSERT INTO tweets(description, tag, userid) VALUES(?, ?, ?)");
+      $insertmsg->execute(array($description, $tags, $data["id_utilisateurs"]));
+    }
   }
+}
+    
+
 
 if(isset($_GET['id'])) {
   $message_id = htmlentities($_GET['id']);
 
-  // Supprime le message de la base de données
   $req = $bdd->prepare('DELETE FROM tweets WHERE id_tweets = ? ');
   $req->execute(array($message_id));
-
 
 }
 ?>
@@ -420,7 +421,7 @@ if(isset($_GET['id'])) {
   <header>
     <div class="header-container">
       <img src="images/logoinstanmanga.png" alt="Logo">
-      <form action="" method="post">
+      <form method="post">
         <input type="text" placeholder="Rechercher...">
         <button type="submit">Rechercher</button>
       </form>
@@ -473,21 +474,21 @@ if(isset($_GET['id'])) {
       ?>
       <?php
       if (isset($_SESSION['user'])) { echo 'cc'?>
-        <div class="card" id="card">
+        <div class="card" >
           <div class="card-body">
             <div class="containerpseudophoto">
               <h5 class="card-title">
                 <?php echo $msg['pseudo']; ?> :
               </h5>
                 <div class="trash">
-                  <button id="monBtn" class="btn" ><i class="fa-solid fa-trash"></i></button>
+                  <button class="btn poubelle" ><i class="fa-solid fa-trash"></i></button>
                 </div>
-                <div class="jetesupprime" id="jetesupprime">
+                <div class="jetesupprime" >
                   <div class="contenu-jetesuppr">
                     <div class="petit-contenu-jetesuppr">
-                      <p class="jeteferme" id="jeteferme">&times;</p>
+                      <p class="jeteferme" >&times;</p>
                       <?php echo "<a class='supprime-toi-bien' href='profil.php?id=". $msg['id_tweets']. "'>"."suppr"."</a>"; echo $msg['id_tweets'];?>
-              <button class="supprime-toi-pas" id="supprime-toi-pas">supprime toi pas</button>
+              <button class="supprime-toi-pas" >supprime toi pas</button>
             </div>
           </div>
         </div>
@@ -497,12 +498,13 @@ if(isset($_GET['id'])) {
           <?php echo $msg['description']; ?><br>
         </p>
         </div>
-        <img src="<?php echo $msg['image']; ?>" class="card-img-bottom">
+        <?php if($msg['image'] != NULL ){  ?>
+        <img src="<?php echo $msg['image']; ?>" alt="imageupload" class="card-img-bottom"> <?php } ?>
         <div class="containerpseudophoto">
-          <button id="monBtn" class="btn"><i class="fa-solid fa-heart" id="coeur"></i></button>
-          <p id="nombredelikes"> 1971 </p>
-          <i class="fa-solid fa-comment" id="commenter"></i>
-          <i class="fa-solid fa-share" id="partager"></i>
+          <button class="btn"><i class="coeur fa-solid fa-heart"></i></button>
+          <p class="nombredelikes" > 0 </p>
+          <i class="commenter fa-solid fa-comment" ></i>
+          <i class="partager fa-solid fa-share" ></i>
         </div>
         <p class="card-text"><small class="text-muted">
             <?php echo $msg['date']; ?><br>
@@ -520,21 +522,21 @@ if(isset($_GET['id'])) {
       ?>
       <?php
       if (isset($_SESSION['user']) and isset($_GET['idpseudo']) ) { ?>
-        <div class="card" id="card">
+        <div class="card" >
           <div class="card-body">
             <div class="containerpseudophoto">
               <h5 class="card-title">
-                <?php echo $_GET['idpseudo']; ?> :
+                <?php echo $msg['pseudo']; ?> :
               </h5>
                 <div class="trash">
-                  <button id="monBtn" class="btn" ><i class="fa-solid fa-trash"></i></button>
+                  <button class="btn poubelle" ><i class="fa-solid fa-trash"></i></button>
                 </div>
-                <div class="jetesupprime" id="jetesupprime">
+                <div class="jetesupprime" >
                   <div class="contenu-jetesuppr">
                     <div class="petit-contenu-jetesuppr">
-                      <p class="jeteferme" id="jeteferme">&times;</p>
+                      <p class="jeteferme" >&times;</p>
                       <?php echo "<a class='supprime-toi-bien' href='profil.php?id=". $msg['id_tweets']. "'>"."suppr"."</a>"; echo $msg['id_tweets'];?>
-              <button class="supprime-toi-pas" id="supprime-toi-pas">supprime toi pas</button>
+              <button class="supprime-toi-pas" >supprime toi pas</button>
             </div>
           </div>
         </div>
@@ -544,12 +546,13 @@ if(isset($_GET['id'])) {
           <?php echo $msg['description']; ?><br>
         </p>
         </div>
-        <img src="<?php echo $msg['image']; ?>" class="card-img-bottom">
+        <?php if($msg['image'] != NULL ){  ?>
+        <img src="<?php echo $msg['image']; ?>" class="card-img-bottom" alt="imagedelapersonnequiupload"> <?php } ?>
         <div class="containerpseudophoto">
-          <button id="monBtn" class="btn"><i class="fa-solid fa-heart" id="coeur"></i></button>
-          <p id="nombredelikes"> 1971 </p>
-          <i class="fa-solid fa-comment" id="commenter"></i>
-          <i class="fa-solid fa-share" id="partager"></i>
+          <button class="btn"><i class="coeur fa-solid fa-heart"></i></button>
+          <p class="nombredelikes" > 0 </p>
+          <i class="commenter fa-solid fa-comment" ></i>
+          <i class="partager fa-solid fa-share" ></i>
         </div>
         <p class="card-text"><small class="text-muted">
             <?php echo $msg['date']; ?><br>
@@ -562,11 +565,10 @@ if(isset($_GET['id'])) {
     <div class="orange">
       <?php
       if (isset($_SESSION['user'])) {
-        echo '<br><button type="button" data-toggle="modal" data-target="#change_password"><img src="images/61183.png"></button>';
+        echo '<br><button type="button" data-toggle="modal" data-target="#change_password"><img src="images/61183.png" alt="imageupload"></button>';
       } ?>
     </div>
-    <div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-      aria-hidden="true">
+    <div class="modal fade" id="change_password" tabindex="-1" role="dialog" >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -576,15 +578,15 @@ if(isset($_GET['id'])) {
             </button>
           </div>
           <div class="modal-body">
-            <form action="" method="POST" enctype="multipart/form-data">
-              <label for='current_password'>Description du post...</label>
-              <input type="text" id="description" name="description" class="form-control" required /><br>
+            <form method="POST" enctype="multipart/form-data">
+              <label for='description'>Description du post...</label>
+              <input type="text" id="description" name="description" class="form-control" required ><br>
               <div class="image-upload">
                 <label for="file-input">
-                  <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/128/Downloads-icon.png" />
+                  <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/128/Downloads-icon.png" alt="uploadimage">
                 </label>
 
-                <input id="file-input" type="file" id="image" name="image" accept=".png, .jpg, .gif" class="form-control" />
+                <input id="file-input" type="file" name="image" accept=".png, .jpg, .gif" class="form-control" >
               </div> <br><br>
               <select name="tags" id="tags">
                 <option value="anime">anime</option>

@@ -31,6 +31,9 @@ const cards = document.querySelectorAll('.card');
 console.log(cards);
 const desboutons = document.querySelectorAll('#destags li');
 console.log(desboutons);
+const reset = document.getElementById('animebtn3');
+console.log(reset);
+
 desboutons.forEach(element => { element.addEventListener('click', () => {
     let tag = event.target.getAttribute('data-tag');
     console.log(tag)
@@ -45,6 +48,10 @@ desboutons.forEach(element => { element.addEventListener('click', () => {
     })
 })
     
+});
+
+reset.addEventListener('click', () => {
+  post.style.display = "block";
 });
 
 function like() {

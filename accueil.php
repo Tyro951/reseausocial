@@ -14,6 +14,7 @@ if (isset($_POST['supprimertweet'])) {
 
 ?>
 <!DOCTYPE html>
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8">
@@ -63,15 +64,10 @@ if (isset($_POST['supprimertweet'])) {
         <li><button id="animebtn" class="animebtn" data-tag="anime" > ANIME </button></li>
         <li><button id="animebtn1" class="animebtn" data-tag="manga" > MANGAS </button></li>
         <li><button id="animebtn2" class="animebtn" data-tag="webtoon" > WEBTOONS </button></li>
+        <li><button id="animebtn3" class="animebtn"  > RESET </button></li>
       </ul>
     <h2 class="tendances"> Tendances du moment : </h2>
-    <?php
-    session_start();
-    $allmsg = $bdd->query('SELECT tweets.*, utilisateurs.pseudo FROM tweets INNER JOIN utilisateurs ON tweets.userid = utilisateurs.id_utilisateurs ORDER BY tweets.id_tweets DESC');
-    while ($msg = $allmsg->fetch()) { ?>
-      <?php
-      if (isset($_SESSION['user'])) { ?>
-      <i id="modalflottant" class="fa-solid fa-pen-nib fa-fade" onclick="ouvretoi()"></i>
+    <i id="modalflottant" class="fa-solid fa-pen-nib fa-fade" onclick="ouvretoi()"></i>
       <div id="modal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
@@ -82,14 +78,14 @@ if (isset($_POST['supprimertweet'])) {
           </div>
           <div class="modal-body">
             <form method="POST" enctype="multipart/form-data">
-              <label for='current_password'>Description du post...</label>
-              <input type="text" id="description" name="description" class="form-control" required ><br>
+              <label for='ladescription'>Description du post...</label>
+              <input type="text" id="ladescription" name="description" class="description form-control" required ><br>
               <div class="image-upload">
                 <label for="file-input">
                   <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/128/Downloads-icon.png" alt="upload image">
                 </label>
 
-                <input id="file-input" type="file" id="image" name="image" accept=".png, .jpg, .gif" class="form-control" >
+                <input id="file-input" type="file" name="image" accept=".png, .jpg, .gif" class="form-control" >
               </div> <br><br>
               <select name="tags" id="tags">
                 <option value="anime">anime</option>
@@ -104,7 +100,13 @@ if (isset($_POST['supprimertweet'])) {
           </div>
         </div>
       </div>
-        <div class="card <?php echo $msg['tag']; ?>" id="card">
+    <?php
+    session_start();
+    $allmsg = $bdd->query('SELECT tweets.*, utilisateurs.pseudo FROM tweets INNER JOIN utilisateurs ON tweets.userid = utilisateurs.id_utilisateurs ORDER BY tweets.id_tweets DESC');
+    while ($msg = $allmsg->fetch()) { ?>
+      <?php
+      if (isset($_SESSION['user'])) { ?>
+        <div class="card <?php echo $msg['tag']; ?>">
           <div class="card-body">
             <div class="containerpseudophoto">
               <h5 class="card-title">
@@ -115,7 +117,7 @@ if (isset($_POST['supprimertweet'])) {
                 ?> :
               </h5>
               <div class="trash">
-                <button id="monBtn" class="btn"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn"><i class="fa-solid fa-trash"></i></button>
               </div>
               <form method="POST">
                 <div class="jetesupprime">
@@ -134,10 +136,10 @@ if (isset($_POST['supprimertweet'])) {
             </p>
           </div>
           <div class="containerpseudophoto">
-            <button id="monBtn" class="btn"><i class="fa-solid fa-heart" id="coeur"></i></button>
-            <p id="nombredelikes"> 1971 </p>
-            <i class="fa-solid fa-comment" id="commenter"></i>
-            <i class="fa-solid fa-share" id="partager"></i>
+            <button class="btn"><i class="coeur fa-solid fa-heart" ></i></button>
+            <p class="nombredelikes"> 0 </p>
+            <i class="commenter fa-solid fa-comment" ></i>
+            <i class="partager fa-solid fa-share" ></i>
           </div>
           <p class="card-text">
             <small class="text-muted">
@@ -150,14 +152,14 @@ if (isset($_POST['supprimertweet'])) {
       }?>
       <?php if (!isset($_SESSION['user'])) {
       if(@$afficher == "oui") { ?>
-        <div class="card" id="card">
+        <div class="card" id="card2">
           <div class="card-body">
             <div class="containerpseudophoto">
               <h5 class="card-title">
                 adam2 :
               </h5>
               <div class="trash">
-                <button id="monBtn" class="btn"><i class="fa-solid fa-trash"></i></button>
+                <button id="monBtn3" class="btn"><i class="fa-solid fa-trash"></i></button>
               </div>
               <form method="POST">
                 <div class="jetesupprime">
@@ -177,10 +179,10 @@ if (isset($_POST['supprimertweet'])) {
           <?php echo $msg['description']; ?><br>
         </p>
         <div class="containerpseudophoto">
-          <button id="monBtn" class="btn"><i class="fa-solid fa-heart" id="coeur"></i></button>
-          <p id="nombredelikes"> 0 </p>
-          <i class="fa-solid fa-comment" id="commenter"></i>
-          <i class="fa-solid fa-share" id="partager"></i>
+          <button id="monBtn4" class="btn"><i class="fa-solid fa-heart" id="coeur2"></i></button>
+          <p id="nombredelikes2"> 0 </p>
+          <i class="fa-solid fa-comment" id="commenter2"></i>
+          <i class="fa-solid fa-share" id="partager2"></i>
         </div>
         <p class="card-text">
           <small class="text-muted">
@@ -211,9 +213,10 @@ if (isset($_POST['supprimertweet'])) {
     </div> <?php } ?>
 
   </main>
-</body>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/30e89f8594.js" crossorigin="anonymous"></script>
 <script src="js/swipe-menu.js" async></script>
 <script src="js/inscris-toi.js"></script>
+</body>
 </html>
