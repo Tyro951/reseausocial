@@ -4,7 +4,7 @@ if (isset($_POST['supprimertweet'])) {
   $message_id = $_POST['message_id'];
 
   // Supprimer le message de la base de données
-  $req = $bdd->prepare('DELETE FROM tweets WHERE id = ? ');
+  $req = $bdd->prepare('DELETE FROM tweets WHERE id_tweets = ? ');
   $req->execute(array($message_id));
 
   // Rediriger vers la page précédente
@@ -21,14 +21,6 @@ if (isset($_POST['supprimertweet'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Instanmanga</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="swipe-menu.js" async></script> <!--exécuter les scripts de façon asynchrone.-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/30e89f8594.js" crossorigin="anonymous"></script>
-  <script src="systemedelike.js"></script>
 </head>
 
 <body>
@@ -74,10 +66,43 @@ if (isset($_POST['supprimertweet'])) {
     <h2 class="tendances"> Tendances du moment : </h2>
     <?php
     session_start();
-    $allmsg = $bdd->query('SELECT * FROM tweets ORDER BY id DESC');
+    $allmsg = $bdd->query('SELECT tweets.*, utilisateurs.pseudo FROM tweets INNER JOIN utilisateurs ON tweets.userid = utilisateurs.id_utilisateurs ORDER BY tweets.id_tweets DESC');
     while ($msg = $allmsg->fetch()) { ?>
       <?php
       if (isset($_SESSION['user'])) { ?>
+      <i id="modalflottant" class="fa-solid fa-pen-nib fa-fade" onclick="ouvretoi()"></i>
+      <div id="modal" class="modal">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Publier un post</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="POST" enctype="multipart/form-data">
+              <label for='current_password'>Description du post...</label>
+              <input type="text" id="description" name="description" class="form-control" required /><br>
+              <div class="image-upload">
+                <label for="file-input">
+                  <img src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/128/Downloads-icon.png" />
+                </label>
+
+                <input id="file-input" type="file" id="image" name="image" accept=".png, .jpg, .gif" class="form-control" />
+              </div> <br><br>
+              <select name="tags" id="tags">
+                <option value="anime">anime</option>
+                <option value="manga">manga</option>
+                <option value="webtoon">Webtoons</option>
+              </select>
+              <button type="submit" name ="submit" class="btn btn-success">publier</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="annuler">annuler</button>
+          </div>
+        </div>
+      </div>
         <div class="card <?php echo $msg['tag']; ?>" id="card">
           <div class="card-body">
             <div class="containerpseudophoto">
@@ -85,18 +110,18 @@ if (isset($_POST['supprimertweet'])) {
                 <?php $req = $bdd->prepare('SELECT * FROM utilisateurs WHERE token = ?');
                 $req->execute(array($_SESSION['user']));
                 $data = $req->fetch();
-                echo $data['pseudo']; 
+                echo "<a class='supprime-toi-bien' href='profil.php?idpseudo=". $msg['pseudo']. "'>".$msg['pseudo']."</a>";
                 ?> :
               </h5>
               <div class="trash">
-                <button id="monBtn" class="btn" onclick="ouvretoi()"><i class="fa-solid fa-trash"></i></button>
+                <button id="monBtn" class="btn"><i class="fa-solid fa-trash"></i></button>
               </div>
               <form action="" method="POST">
                 <div class="jetesupprime">
                   <div class="contenu-jetesuppr">
                     <div class="petit-contenu-jetesuppr">
                       <p class="jeteferme">&times;</p>
-                      <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
+                      <input type="hidden" name="message_id" value="<?php echo $msg['id_tweets']; ?>">
                       <button class="supprime-toi-bien" name="supprimertweet" id="supprime-toi-bien">supprime toi
                         bien</button>
               </form>
@@ -138,7 +163,7 @@ if (isset($_POST['supprimertweet'])) {
                   <div class="contenu-jetesuppr">
                     <div class="petit-contenu-jetesuppr">
                       <p class="jeteferme">&times;</p>
-                      <input type="hidden" name="message_id" value="<?php echo $msg['id']; ?>">
+                      <input type="hidden" name="message_id" value="<?php echo $msg['id_tweets']; ?>">
                       <button class="supprime-toi-bien" name="supprimertweet" id="supprime-toi-bien">supprime toi
                         bien</button>
               </form>
@@ -220,9 +245,14 @@ if (isset($_POST['supprimertweet'])) {
       </div>
     </div> <?php } ?>
 
-
   </main>
 </body>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/30e89f8594.js" crossorigin="anonymous"></script>
+  <script src="systemedelike.js"></script>
+<script src="swipe-menu.js" async></script>
 <script src="filtrage.js"></script>
 <script src="supprimerunpost.js"></script>
 <script src="inscris-toi.js"></script>
@@ -383,6 +413,7 @@ if (isset($_POST['supprimertweet'])) {
     width: 100%;
     height: 100%;
     overflow: hidden ;
+    -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
   }
   .contenudecotoibatard{
@@ -507,6 +538,50 @@ if (isset($_POST['supprimertweet'])) {
 
   #nombredelikes2 {
     margin-top: 8%;
+  }
+  #modalflottant{
+    top: 60%;
+    right: 5%;
+    position: fixed;
+    padding: 1%;
+    background-color: white;
+    border-radius: 50%;
+  }
+  .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    right: 0;
+    top : 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+  .modal-dialog {
+    margin: 15% auto;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
   }
 
   #menuburger {

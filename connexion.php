@@ -29,9 +29,10 @@
                 {
                     // On créer la session et on redirige sur parametres.php
                     $_SESSION['user'] = $data['token'];
+                    $_SESSION['id_utilisateurs'] = $data['id_utilisateurs'];
                     header('Location: parametres.php');
                     die();
                 }else{ header('Location: index.php?login_err=password'); die(); }
             }else{ header('Location: index.php?login_err=email'); die(); }
         }else{ header('Location: index.php?login_err=already'); die(); }
-    }else{ header('Location: index.php'); die();} // si le formulaire est envoyé sans aucune données
+    }else{ header('Location: index.php'); die();} 

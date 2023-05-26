@@ -1,5 +1,7 @@
 var Menu = document.querySelector("#menu");
 var barMenu = document.querySelector("#menuburger");
+console.log(barMenu);
+console.log(Menu);
 
 
 // regarde bien si touchstart existe et si il est le premier déclenché
@@ -42,7 +44,7 @@ if(screen.width <= 1024) {
 	}, false);
 
 	// Quand les points de contacts sont en mouvement
-	window.addEventListener("touchmove", function(evt) { //sert à éviter les effets de bord avec le tactile
+	window.addEventListener("touchmove", { passive: false }, function(evt) { //sert à éviter les effets de bord avec le tactile
 		evt.preventDefault();
 		evt.stopPropagation();
 	}, false);
