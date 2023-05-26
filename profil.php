@@ -51,6 +51,8 @@ if(isset($_GET['id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>Instanmanga</title>
   
 <style>
@@ -435,15 +437,14 @@ if(isset($_GET['id'])) {
   </header>
   <main>
     <a href="parametres.php"><img src="images/nuticon_114497.png" class="parametres" alt="paramètres"></a>
-    <?php // ajout connexion bdd 
-    // si la session existe pas soit si l'on est pas connecté on redirige
+    <?php 
     if (!isset($_SESSION['user'])) {
-      echo '<div class="container"><img src="images/anonyme.png" alt="?"><h2 class="nonconnecte"> Vous n êtes pas connectés </h2></div><br><button class="seconnecter" onclick="window.location.href = "index.php";">se connecter</button>';
+      echo '<div class="container"><img src="images/anonyme.png" alt="?"><h2 class="nonconnecte"> Vous n êtes pas connectés </h2></div><br><button class="seconnecter"><a href="index.php">se connecter</a></button>';
     }  
     ?> 
     <?php
     if (isset($_SESSION['user'])) {
-      if (isset($_GET['idpseudo'])) {
+      if (isset($_GET['idpseudo']) and $_GET['idpseudo']!= $data['pseudo']) {
         ?>
         <div class="profilconnexion">
           <h3> Vous êtes sur la page de :
@@ -451,7 +452,8 @@ if(isset($_GET['id'])) {
           </h3>
         </div>
         <?php
-    } else {
+    } 
+    else {
         ?>
         <div class="profilconnexion">
           <h3> Vous êtes connecté en tant que :
@@ -464,7 +466,7 @@ if(isset($_GET['id'])) {
     ?>
     <hr class="bordure" style="border-top: 1px solid gray;">
     <?php
-    if(!isset($_GET['idpseudo'])){
+    if(!isset($_GET['idpseudo']) and isset($_SESSION['user'])){
     $allmsg = $bdd->prepare('SELECT tweets.*, utilisateurs.* FROM tweets INNER JOIN utilisateurs ON tweets.userid = utilisateurs.id_utilisateurs WHERE utilisateurs.id_utilisateurs = ? ORDER BY tweets.id_tweets DESC');
     $allmsg->execute(array($data["id_utilisateurs"]));
     while ($msg = $allmsg->fetch(PDO::FETCH_ASSOC)) {
@@ -583,7 +585,7 @@ if(isset($_GET['id'])) {
                 </label>
 
                 <input id="file-input" type="file" id="image" name="image" accept=".png, .jpg, .gif" class="form-control" />
-              </div> <br><br>9
+              </div> <br><br>
               <select name="tags" id="tags">
                 <option value="anime">anime</option>
                 <option value="manga">manga</option>
@@ -610,10 +612,7 @@ if(isset($_GET['id'])) {
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="supprimerunpost.js"></script>
-    <script src="localstorage.js"></script>
+    <script src="js/supprimerunpost.js"></script>
 </body>
 
 </html>

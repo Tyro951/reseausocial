@@ -1,0 +1,33 @@
+.cotoi{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden ;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+  .contenudecotoi{
+    margin-top: 10%;
+    margin-bottom: 25%;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: white;
+    padding: 3%;
+  }
+  .jeteferme {
+    font-size: x-large;
+    color: grey;
+    font-weight: bold;
+    position: relative;
+    cursor: pointer;
+    margin-left: 3%;
+    margin-top: 2%;
+  }
+
+  .jeteferme:hover {
+    color: white;
+  }

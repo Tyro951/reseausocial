@@ -1,0 +1,119 @@
+.containerpseudophoto {
+    margin-right: 70%;
+    display: flex;
+  }
+
+  .image-upload>input {
+    display: none;
+  }
+
+  .containerpseudophoto h5 {
+    margin-top: 3%;
+  }
+
+  .trash {
+    position: absolute;
+    right: 10px;
+  }
+
+  .containerpseudophoto img {
+    width: 20%;
+  }
+
+  #coeur {
+    margin-left: 0%;
+    margin-top: 2%;
+    margin-right: 1%;
+  }
+
+  #coeur:hover {
+    color: red;
+    transition: all 1s ease;
+    transform: scale(1.5);
+  }
+
+  #commenter {
+    margin-left: 120%;
+    margin-top: 10%;
+  }
+
+  #commenter:hover {
+    color: rgb(24, 24, 239);
+    transition: all 1s ease;
+    transform: scale(1.5);
+  }
+
+  #partager {
+    margin-left: 135%;
+    margin-top: 10%;
+  }
+
+  #partager:hover {
+    color: rgb(11, 194, 11);
+    transition: all 1s ease;
+    transform: scale(1.5);
+  }
+
+  #coeur2 {
+    margin-left: 0%;
+    margin-top: 100%;
+    margin-right: 1%;
+  }
+
+  .coeur2ez {
+    color: red;
+    transition: all 1s ease;
+  }
+
+  #coeur2:hover {
+    color: red;
+    transition: all 1s ease;
+    transform: scale(1.5);
+  }
+
+  #commenter2 {
+    margin-left: 120%;
+    margin-top: 10%;
+  }
+
+  #commenter2:hover {
+    color: rgb(24, 24, 239);
+    transition: all 1s ease;
+    transform: scale(1.5);
+  }
+
+  #partager2 {
+    margin-left: 135%;
+    margin-top: 10%;
+  }
+
+  #partager2:hover {
+    color: rgb(11, 194, 11);
+    transition: all 1s ease;
+    transform: scale(1.5);
+  }
+
+  .card {
+    width: 50%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: 20%;
+  }
+  .cardo {
+    width: 50%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: 20%;
+    border-radius: 1px;
+    border-color: grey;
+    background-color: white;
+    padding: 1%;
+  }
+
+  #nombredelikes {
+    margin-top: 8%;
+  }
+
+  #nombredelikes2 {
+    margin-top: 8%;
+  }
